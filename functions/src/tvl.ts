@@ -33,23 +33,23 @@ export const schedule_TVL = functions.pubsub
       });
   });
 
-export const manual_tvl = functions.https.onRequest(async (req, res) => {
-  const provider = new ethers.providers.WebSocketProvider(providerLink);
-  const ltyToken = new ethers.Contract(
-    ltyTokenAddress,
-    ltyTokenABI.abi,
-    provider
-  );
+// export const manual_tvl = functions.https.onRequest(async (req, res) => {
+//   const provider = new ethers.providers.WebSocketProvider(providerLink);
+//   const ltyToken = new ethers.Contract(
+//     ltyTokenAddress,
+//     ltyTokenABI.abi,
+//     provider
+//   );
 
-  let tvl = await ltyToken.totalSupply();
-  const ltyTvl = parseInt(tvl._hex, 16);
+//   let tvl = await ltyToken.totalSupply();
+//   const ltyTvl = parseInt(tvl._hex, 16);
 
-  await db
-    .collection("tvl")
-    .doc()
-    .set({
-      created: Date.now(),
-      tvl: ltyTvl / 10 ** ltyDecimals,
-    });
-  res.send("TVL has been added");
-});
+//   await db
+//     .collection("tvl")
+//     .doc()
+//     .set({
+//       created: Date.now(),
+//       tvl: ltyTvl / 10 ** ltyDecimals,
+//     });
+//   res.send("TVL has been added");
+// });
