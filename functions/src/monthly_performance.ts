@@ -1,14 +1,14 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { ethers } from "ethers";
-import * as ltyTokenABI from "./abi/LDG01.json";
+import * as lusdcTokenABI from "./abi/LUSDC.json";
 
 const db = admin.firestore();
 
 const providerLink =
-  "wss://polygon-mumbai.g.alchemy.com/v2/jjJR-dEK1trjqGpQCsNyQ-sq4ofD2nS8";
-const ltyTokenAddress = "0x9b7F3Cb11b6E448a84584B796629F8e3f0216538";
-const ltyDecimals = 18;
+  "wss://polygon-mainnet.g.alchemy.com/v2/oCpKb4y16gIydWUO7n2flcYSKAzkH3_p";
+const lusdcTokenAddress = "0x1080fFf81F5DF23c024ce38D785a734Eb5f6d84d";
+const lusdcDecimals = 18;
 
 export const schedule_user_monthly_performance = functions
   .region("europe-west1")
@@ -17,8 +17,8 @@ export const schedule_user_monthly_performance = functions
   .onRun(async () => {
     const provider = new ethers.providers.WebSocketProvider(providerLink);
     const ltyToken = new ethers.Contract(
-      ltyTokenAddress,
-      ltyTokenABI.abi,
+      lusdcTokenAddress,
+      lusdcTokenABI.abi,
       provider
     );
 
@@ -53,7 +53,7 @@ export const schedule_user_monthly_performance = functions
 
       balanceTrx = await ltyToken.balanceOf(address);
 
-      balParsed = parseInt(balanceTrx._hex, 16) / 10 ** ltyDecimals;
+      balParsed = parseInt(balanceTrx._hex, 16) / 10 ** lusdcDecimals;
 
       profit = balParsed - finalBalance;
       pourcentage = profit / balParsed;
@@ -79,8 +79,8 @@ export const manual_user_monthly_performance = functions
   .https.onRequest(async (req, res) => {
     const provider = new ethers.providers.WebSocketProvider(providerLink);
     const ltyToken = new ethers.Contract(
-      ltyTokenAddress,
-      ltyTokenABI.abi,
+      lusdcTokenAddress,
+      lusdcTokenABI.abi,
       provider
     );
 
@@ -115,7 +115,7 @@ export const manual_user_monthly_performance = functions
 
       balanceTrx = await ltyToken.balanceOf(address);
 
-      balParsed = parseInt(balanceTrx._hex, 16) / 10 ** ltyDecimals;
+      balParsed = parseInt(balanceTrx._hex, 16) / 10 ** lusdcDecimals;
 
       profit = balParsed - finalBalance;
       pourcentage = profit / balParsed;
