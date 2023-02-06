@@ -1,2 +1,5 @@
 START PROJECT :
 - firebase emulators:start
+
+DEPLOY FUNCTION :
+- firebase deploy --only functions
