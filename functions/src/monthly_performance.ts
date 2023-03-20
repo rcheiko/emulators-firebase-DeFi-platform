@@ -29,7 +29,7 @@ export const schedule_user_monthly_performance = functions
       });
 
       const result = await getBalanceLastMonth(doc);
-      if (result) finalBalance += result;
+      if (typeof(result) === 'number' && result > 0) finalBalance += result;
 
       const lastPortfolioDoc = await db
         .collection("user")
@@ -49,7 +49,7 @@ export const schedule_user_monthly_performance = functions
         .collection("monthlyPerformance")
         .doc()
         .set({
-          finalBalance: finalBalance,
+          balance: finalBalance,
           profit: profit,
           pourcentage: pourcentage,
           created: Date.now(),
@@ -103,7 +103,7 @@ export const manual_user_monthly_performance = functions
         .collection("monthlyPerformance")
         .doc()
         .set({
-          finalBalance: finalBalance,
+          balance: finalBalance,
           profit: profit,
           pourcentage: pourcentage,
           created: Date.now(),
