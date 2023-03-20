@@ -49,7 +49,7 @@ export const schedule_user_monthly_performance = functions
         .collection("monthlyPerformance")
         .doc()
         .set({
-          balance: finalBalance,
+          balance: finalBalance + profit,
           profit: profit,
           pourcentage: pourcentage,
           created: Date.now(),
@@ -103,7 +103,7 @@ export const manual_user_monthly_performance = functions
         .collection("monthlyPerformance")
         .doc()
         .set({
-          balance: finalBalance,
+          balance: finalBalance + profit,
           profit: profit,
           pourcentage: pourcentage,
           created: Date.now(),
